@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="css/style.css">
+
+<style>
+
+canvas{
+    background:#111;
+    border:4px solid #00ff88;
+    border-radius:12px;
+    margin-top:15px;
+    box-shadow:0 0 20px #00ff88;
+}
+
+/* efek arena grid */
+
+.game-container{
+    margin-top:20px;
+}
+
+.score{
+    color:white;
+    margin-top:10px;
+}
+
+.controls{
+    margin-top:10px;
+}
+
+.controls button{
+    font-size:20px;
+    padding:10px 15px;
+    margin:3px;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+.game-selector{
+margin-top:20px;
+}
+
+.game-selector button{
+background:#111;
+color:#00ff88;
+border:2px solid #00ff88;
+padding:8px 15px;
+margin:5px;
+border-radius:8px;
+cursor:pointer;
+}
+
+.game-box{
+margin-top:20px;
+}
+
+.board{
+display:grid;
+grid-template-columns:repeat(3,100px);
+gap:5px;
+justify-content:center;
+margin-top:15px;
+}
+
+.cell{
+width:100px;
+height:100px;
+background:#111;
+border:2px solid #00ff88;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:40px;
+color:#00ff88;
+cursor:pointer;
+}
+
+</style>
+
+</head>
+<body>
+
+<div class="center">
+
+<h1>Buka Tanggal 20 Februari ya ❤️</h1>
+
+<div id="countdown" class="countdown">
+<div><span id="days">0</span><small>Days</small></div>
+<div><span id="hours">0</span><small>Hours</small></div>
+<div><span id="minutes">0</span><small>Minutes</small></div>
+<div><span id="seconds">0</span><small>Seconds</small></div>
+</div>
+
+<h2>Masih kekunci sabar dulu napa siiiiiii:P</h2>
+<div id="lock" class="lock">🔒</div>
+
+<h2>Main game dulu nihh</h2>
+
+<div class="game-selector">
+
+<button onclick="showGame('snake')">Snake 🐍</button>
+<button onclick="showGame('ttt')">Tic Tac Toe ❌⭕</button>
+
+</div>
+
+<!-- SNAKE GAME -->
+<div id="snakeGame" class="game-box">
+<canvas id="game" width="300" height="300"></canvas>
+<div class="score">Score: <span id="score">0</span></div>
+</div>
+
+<div class="controls">
+
+<div>
+<button onclick="setDirection('up')">↑</button>
+</div>
+
+<div>
+<button onclick="setDirection('left')">←</button>
+<button onclick="setDirection('down')">↓</button>
+<button onclick="setDirection('right')">→</button>
+</div>
+
+</div>
+
+<!-- TIC TAC TOE -->
+<div id="tttGame" class="game-box" style="display:none;">
+
+<div id="board" class="board"></div>
+
+<div id="tttStatus" class="score"></div>
+
+<button onclick="resetTTT()">Restart</button>
+
+</div>
+
+</div>
+
+<script src="js/countdown.js"></script>
+
+<script>
+
+const canvas = document.getElementById("game");
+const ctx = canvas.getContext("2d");
+
+const grid = 15;
+let count = 0;
+
+let snake = {
+    x:150,
+    y:150,
+    dx:grid,
+    dy:0,
+    cells:[],
+    maxCells:4
+};
+
+let apple = {
+    x:90,
+    y:90
+};
+
+let score = 0;
+
+function getRandomInt(min,max){
+    return Math.floor(Math.random()*(max-min))+min;
+}
+
+function gameLoop(){
+
+requestAnimationFrame(gameLoop);
+
+if(++count < 6) return;
+
+count = 0;
+
+ctx.clearRect(0,0,canvas.width,canvas.height);
+
+/* DRAW GRID */
+ctx.strokeStyle = "#222";
+for(let i=0;i<canvas.width;i+=grid){
+    ctx.beginPath();
+    ctx.moveTo(i,0);
+    ctx.lineTo(i,canvas.height);
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.moveTo(0,i);
+    ctx.lineTo(canvas.width,i);
+    ctx.stroke();
+}
+
+/* MOVE */
+snake.x += snake.dx;
+snake.y += snake.dy;
+
+/* WRAP WALL */
+if(snake.x < 0) snake.x = canvas.width-grid;
+if(snake.x >= canvas.width) snake.x = 0;
+if(snake.y < 0) snake.y = canvas.height-grid;
+if(snake.y >= canvas.height) snake.y = 0;
+
+snake.cells.unshift({x:snake.x,y:snake.y});
+
+if(snake.cells.length > snake.maxCells){
+    snake.cells.pop();
+}
+
+/* DRAW APPLE */
+ctx.fillStyle="red";
+ctx.fillRect(apple.x,apple.y,grid-1,grid-1);
+
+/* DRAW SNAKE */
+ctx.fillStyle="#00ff88";
+
+snake.cells.forEach(function(cell,index){
+
+ctx.fillRect(cell.x,cell.y,grid-1,grid-1);
+
+if(cell.x===apple.x && cell.y===apple.y){
+
+snake.maxCells++;
+score++;
+document.getElementById("score").innerText = score;
+
+apple.x = getRandomInt(0,20)*grid;
+apple.y = getRandomInt(0,20)*grid;
+}
+
+/* SELF COLLISION */
+for(let i=index+1;i<snake.cells.length;i++){
+    if(cell.x===snake.cells[i].x && cell.y===snake.cells[i].y){
+        resetGame();
+    }
+}
+
+});
+
+}
+
+function resetGame(){
+alert("Game Over! Score: "+score);
+
+snake.x=150;
+snake.y=150;
+snake.cells=[];
+snake.maxCells=4;
+snake.dx=grid;
+snake.dy=0;
+score=0;
+document.getElementById("score").innerText = score;
+}
+
+/* KEYBOARD CONTROL */
+function setDirection(dir){
+
+if(dir==="left" && snake.dx===0){
+snake.dx=-grid;
+snake.dy=0;
+}
+
+if(dir==="right" && snake.dx===0){
+snake.dx=grid;
+snake.dy=0;
+}
+
+if(dir==="up" && snake.dy===0){
+snake.dy=-grid;
+snake.dx=0;
+}
+
+if(dir==="down" && snake.dy===0){
+snake.dy=grid;
+snake.dx=0;
+}
+
+}
+
+document.addEventListener("keydown",function(e){
+if(e.key==="ArrowLeft" && snake.dx===0){snake.dx=-grid;snake.dy=0;}
+if(e.key==="ArrowRight" && snake.dx===0){snake.dx=grid;snake.dy=0;}
+if(e.key==="ArrowUp" && snake.dy===0){snake.dy=-grid;snake.dx=0;}
+if(e.key==="ArrowDown" && snake.dy===0){snake.dy=grid;snake.dx=0;}
+});
+
+/* TOUCH SWIPE CONTROL */
+let touchStartX=0;
+let touchStartY=0;
+
+canvas.addEventListener("touchstart",function(e){
+touchStartX=e.touches[0].clientX;
+touchStartY=e.touches[0].clientY;
+});
+
+canvas.addEventListener("touchend",function(e){
+
+let dx=e.changedTouches[0].clientX-touchStartX;
+let dy=e.changedTouches[0].clientY-touchStartY;
+
+if(Math.abs(dx)>Math.abs(dy)){
+
+    if(dx>0 && snake.dx===0){snake.dx=grid;snake.dy=0;}
+    else if(dx<0 && snake.dx===0){snake.dx=-grid;snake.dy=0;}
+
+}else{
+
+    if(dy>0 && snake.dy===0){snake.dy=grid;snake.dx=0;}
+    else if(dy<0 && snake.dy===0){snake.dy=-grid;snake.dx=0;}
+
+}
+
+});
+
+requestAnimationFrame(gameLoop);
+
+function showGame(game){
+
+document.getElementById("snakeGame").style.display="none";
+document.getElementById("tttGame").style.display="none";
+
+if(game==="snake"){
+document.getElementById("snakeGame").style.display="block";
+}else{
+document.getElementById("tttGame").style.display="block";
+}
+
+}
+
+const board = document.getElementById("board");
+const statusText = document.getElementById("tttStatus");
+
+let cells = [];
+let currentPlayer = "X";
+let gameActive = true;
+
+function initBoard(){
+board.innerHTML="";
+cells = [];
+
+for(let i=0;i<9;i++){
+let cell=document.createElement("div");
+cell.classList.add("cell");
+cell.dataset.index=i;
+cell.addEventListener("click",playerMove);
+board.appendChild(cell);
+cells.push("");
+}
+
+statusText.innerText="Your Turn (X)";
+gameActive=true;
+}
+
+function playerMove(e){
+
+let index=e.target.dataset.index;
+
+if(!gameActive || cells[index]!="") return;
+
+cells[index]="X";
+e.target.innerText="X";
+
+if(checkWinner("X")){
+statusText.innerText="You Win!";
+gameActive=false;
+return;
+}
+
+if(cells.every(c=>c!="")){
+statusText.innerText="Draw!";
+gameActive=false;
+return;
+}
+
+setTimeout(comMove,500);
+}
+
+function comMove(){
+
+let move = getBestMove();
+
+cells[move]="O";
+board.children[move].innerText="O";
+
+if(checkWinner("O")){
+statusText.innerText="Computer Wins!";
+gameActive=false;
+return;
+}
+
+if(cells.every(c=>c!="")){
+statusText.innerText="Draw!";
+gameActive=false;
+}
+
+}
+
+function getBestMove(){
+
+// MEDIUM AI:
+// 1. Try win
+// 2. Block player
+// 3. Random
+
+for(let i=0;i<9;i++){
+if(cells[i]==""){
+cells[i]="O";
+if(checkWinner("O")){cells[i]="";return i;}
+cells[i]="";
+}
+}
+
+for(let i=0;i<9;i++){
+if(cells[i]==""){
+cells[i]="X";
+if(checkWinner("X")){cells[i]="";return i;}
+cells[i]="";
+}
+}
+
+let empty = cells.map((v,i)=>v==""?i:null).filter(v=>v!=null);
+return empty[Math.floor(Math.random()*empty.length)];
+
+}
+
+function checkWinner(player){
+
+const winCombos=[
+[0,1,2],[3,4,5],[6,7,8],
+[0,3,6],[1,4,7],[2,5,8],
+[0,4,8],[2,4,6]
+];
+
+return winCombos.some(combo=>{
+return combo.every(index=>cells[index]==player);
+});
+
+}
+
+function resetTTT(){
+initBoard();
+}
+
+initBoard();
+
+</script>
+
+
+</body>
+</html>

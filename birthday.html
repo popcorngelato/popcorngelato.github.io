@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<audio id="music" src="assets/music/music.mp3" loop></audio>
+
+<div id="overlay" class="overlay">
+Tap ❤️
+</div>
+
+<div class="app">
+
+<div class="profile">
+
+<img src="assets/images/profile.jpg" class="profile-pic">
+
+<div class="profile-info">
+
+<div class="username">gusti nurul merdIKO ❤️</div>
+
+<div class="profile-stats">
+
+<div><b>9</b> posts</div>
+
+<div><b>1</b> lover</div>
+
+<div><b>forever</b></div>
+
+</div>
+
+<div class="profile-bio">
+
+Happy Level Up day! ❤️<br>
+Semoga gallery ini bisa buat km tetep semangat
+
+</div>
+
+<div class="message-btn" onclick="openDM()">
+Message
+</div>
+
+</div>
+
+</div>
+
+<div class="stories">
+
+<div class="story-item" onclick="openStory(0)">
+<img src="assets/images/story1.jpg">
+<span>First Meet</span>
+</div>
+
+<div class="story-item" onclick="openStory(1)">
+<img src="assets/images/story2.jpg">
+<span>Memories</span>
+</div>
+
+<div class="story-item" onclick="openStory(2)">
+<img src="assets/images/story3.jpg">
+<span>Us</span>
+</div>
+
+<div class="story-item" onclick="openStory(3)">
+<img src="assets/images/story4.jpg">
+<span>Today ❤️</span>
+</div>
+
+</div>
+
+<div class="gallery grid9">
+
+<div onclick="openGrid()" class="grid-item" style="background-position:0% 0%"></div>
+<div onclick="openGrid()" class="grid-item" style="background-position:50% 0%"></div>
+<div onclick="openGrid()" class="grid-item" style="background-position:100% 0%"></div>
+
+<div onclick="openGrid()" class="grid-item" style="background-position:0% 50%"></div>
+<div onclick="openGrid()" class="grid-item" style="background-position:50% 50%"></div>
+<div onclick="openGrid()" class="grid-item" style="background-position:100% 50%"></div>
+
+<div onclick="openGrid()" class="grid-item" style="background-position:0% 100%"></div>
+<div onclick="openGrid()" class="grid-item" style="background-position:50% 100%"></div>
+<div onclick="openGrid()" class="grid-item" style="background-position:100% 100%"></div>
+
+</div>
+
+</div>
+
+
+<div id="storyViewer" class="viewer">
+
+<div class="story-wrapper">
+
+<div id="storyProgress" class="story-progress"></div>
+
+<!-- tombol controls -->
+<div class="story-controls">
+
+<span class="story-btn" onclick="closeStory()">✕</span>
+
+</div>
+
+<div id="storyTitle" class="story-title"></div>
+
+<img id="storyImg">
+
+</div>
+
+</div>
+
+<!-- GRID VIEWER -->
+<div id="postViewer" class="viewer">
+<img id="postImg">
+</div>
+
+
+<!-- DM POPUP -->
+<div id="dmModal" class="dm-modal">
+
+  <div class="dm-box">
+
+    <div class="dm-header">
+      <img src="assets/images/profile.jpg" class="dm-profile-pic">
+      <div>
+        <div class="dm-name">Your Love ❤️</div>
+        <div class="dm-status">online</div>
+      </div>
+      <button onclick="closeDM()">✕</button>
+    </div>
+
+    <!-- INI WAJIB ADA -->
+    <div id="dmText" class="dm-chat"></div>
+
+  </div>
+
+</div>
+
+
+<script src="js/gallery.js"></script>
+
+</body>
+</html>
