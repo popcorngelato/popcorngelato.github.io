@@ -13,7 +13,7 @@ document.getElementById("music").play();
 const stories=[
 
 {
-title:"First Meet ❤️",
+title:"First Meet ",
 images:[
 "assets/images/story1.jpg",
 "assets/images/photo-1.2.jpg",
@@ -35,7 +35,7 @@ images:[
 },
 
 {
-title:"Belakang Kantor 💕",
+title:"Belakang Kantor ",
 images:[
 "assets/images/story3.jpg",
 "assets/images/photo-3.1.jpg",
@@ -56,7 +56,7 @@ images:[
 },
 
 {
-title:"Levain w/ Moli 🎂",
+title:"Levain w/ Moli ",
 images:[
 "assets/images/story4.jpg",
 "assets/images/photo-4.1.jpg",
@@ -296,7 +296,7 @@ viewer.onclick=()=>viewer.style.display="none";
 
 let messages = [
 
-`Happy Birthday My Love Iko ❤️`,
+`Happy Birthday Iko `,
 
 `Hari ini adalah hari spesialmu...
 Dan aku cuma ingin kamu tahu
@@ -317,7 +317,7 @@ WE WERE CHAPTERS, WE WERE SHELTERS, AND WE WERE HOME."`,
 Semoga semua impianmu tercapai.
 Aku akan selalu ada untukmu.`,
 
-`from friend, lover, or ❤️`
+`from friend, lover, or -`
 
 ];
 
