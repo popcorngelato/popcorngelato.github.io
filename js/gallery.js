@@ -92,7 +92,7 @@ images:[
 let currentStory = 0;
 let currentIndex = 0;
 let storyTimer = null;
-let duration = 3000;
+let duration = 5000;
 let progress = 0;
 let isPaused = false;
 
