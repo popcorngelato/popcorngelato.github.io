@@ -1,6 +1,6 @@
 function checkPassword(){
 
-if(document.getElementById("password").value=="12345"){
+if(document.getElementById("password").value=="popcornboy"){
 
 location="birthday.html";
 
