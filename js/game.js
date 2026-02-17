@@ -55,7 +55,7 @@ const ctx = canvas.getContext("2d");
 
 const grid = 15;
 let count = 0;
-let speed = 10;
+let speed = 20;
 
 let snake;
 let apple;
@@ -83,7 +83,7 @@ function initSnake(){
     };
 
     score = 0;
-    speed = 10;
+    speed = 20;
 
     document.getElementById("score").innerText=score;
 
