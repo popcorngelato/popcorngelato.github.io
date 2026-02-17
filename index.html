@@ -36,9 +36,7 @@
 <div class="game-selector">
 
 <button onclick="showGame('snake')">Snake 🐍</button>
-
 <button onclick="showGame('ttt')">Tic Tac Toe ❌⭕</button>
-
 <button onclick="showGame('memory')">Tebak Gambar 🧠</button>
 
 
@@ -86,15 +84,18 @@
 
 <!-- MEMORY GAME -->
 
-<div id="memoryBoard" class="memory-grid"></div>
+<div id="memoryGame" class="game-box" style="display:none;">
 
-<div class="memory-stats">
-Moves: <span id="moveCount">0</span> |
-Time: <span id="timer">0</span>s |
-Best: <span id="bestTime">--</span>s
-</div>
+  <div id="memoryBoard" class="memory-grid"></div>
 
-<button onclick="resetMemory()">Reset</button>
+  <div class="memory-stats">
+    Moves: <span id="moveCount">0</span> |
+    Time: <span id="timer">0</span>s |
+    Best: <span id="bestTime">--</span>s
+  </div>
+
+  <button onclick="initMemory()">Reset</button>
+
 </div>
 
 </div>
