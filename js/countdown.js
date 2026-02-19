@@ -1,4 +1,4 @@
-const target=new Date("Feb 20, 2026 22:00:00").getTime();
+const target=new Date("Feb 20, 2026 00:00:00").getTime();
 
 setInterval(()=>{
 
